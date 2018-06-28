@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Controller;
+
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+class FileController extends Controller
+{
+    /**
+     * @Route("/file", name="file")
+     */
+    public function index()
+    {
+        return $this->render('file/index.html.twig', [
+            'controller_name' => 'FileController',
+        ]);
+    }
+}

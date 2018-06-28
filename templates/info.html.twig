@@ -1,0 +1,106 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Create{% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+    <script>
+    $(document).ready(function(){
+	 
+	 var files = {{ files|raw }};
+
+	 console.log(files);
+	 if (files.length != 0){
+	     var carousel = $('<div id="demo" class="carousel slide" data-ride="carousel"></div>')
+	     var carInner = $('<div class="carousel-inner"></div>');
+	     files.forEach(function(file, i){
+		 //console.log(i)
+		 if (i != 0)
+		     carInner.append($('<div class="carousel-item"><img src="'+file+'" ></div>'))
+		 else
+		     carInner.append($('<div class="carousel-item active"><img src="'+file+'" ></div>'))
+	     })
+	     carousel.append(carInner);
+	     if (files.length != 1){
+		 carousel.append($('<a class="carousel-control-prev" href="#demo" data-slide="prev"><span class="carousel-control-prev-icon"></span> </a><a class="carousel-control-next" href="#demo" data-slide="next"><span class="carousel-control-next-icon"></span></a>'))
+	     }
+	     $('#mb').append(carousel);
+    }
+
+    $('#like').click(function(){
+	 $.post('/fav/{{uid}}', function(dd){
+	     location.reload();
+	 })
+     })
+
+     $('#dislike').click(function(){
+	 $.post('/unfav/{{uid}}', function(dd){
+	     location.reload();
+	 })
+     })
+
+    
+     })
+    </script>
+{% endblock %}
+
+{% block body %}
+    <style>
+
+     .carousel-inner img {
+	 margin:auto;
+	 vertical-align:middle;
+	 width: 80%;
+	 height: 80%;
+	 object-fit: scale-down;
+	 
+     }
+
+     .carousel-inner {
+	 text-align:center;
+	 height: 100%;
+	 width:100%;
+     }
+     
+     .carousel {
+	 margin:auto;
+	 background-color: #696969;
+	 height: 300px;
+	 width:100%;
+     }
+    </style>
+    
+  <div class="container">
+    <h1 class="mx-auto"
+        style="margin: 5px 0 20px 0; text-align: center;
+        font-weight: 100;">cr</h1>
+    <div class="card col-6 bg-q mx-auto" style="margin-bottom: 20px;">
+      <div class="card-body" id="mb">
+        
+        
+          <br>
+          <h3>{{ title }}</h3>
+	  <p>{{ address }}</p>
+	  <p>{{ description }}</p>
+
+
+
+	  {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+	  {% if likedbyme %}
+	  <a class="btn btn-primary btn-sm" id="dislike">
+	    <span class="glyphicon glyphicon-thumbs-up"></span> Unfav
+          </a>
+	  {% else  %}
+	  <a class="btn btn-primary btn-sm" id="like">
+	    <span class="glyphicon glyphicon-thumbs-up"></span> Fav
+          </a>
+	  {% endif %}
+	  {% endif %}
+	  
+	  
+      </div>
+    </div>
+  </div>
+  </div>
+{% endblock %}

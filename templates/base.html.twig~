@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Lesson 2 [2]{% endblock %}</title>
+  {% block stylesheets %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+  {% endblock %}
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="position:absolute; top:0; left:0; z-index:100; height:60px; width:100%">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="/">R</a>
+
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <!-- <li class="nav-item active"> -->
+      <!--   <a class="nav-link" href="/">Home</a> -->
+      <!-- </li> -->
+
+
+      <li class="nav-item">
+        <a class="nav-link" href="/list">List all ads</a>
+      </li>
+      {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+      
+      <li class="nav-item">
+        <a class="nav-link" href="/my-ads">List my ads</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/create">Create new ads</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/logout">Log out</a>
+      </li>
+      
+      {% elseif is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
+      <li class="nav-item">
+        <a class="nav-link" href="/register">Sign up</a>
+      </li>
+      <li class="nav-item">
+      <li class="nav-item">
+        <a class="nav-link" href="/login">Log in</a>
+      </li>
+      {% endif %}
+    </ul>
+
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+     <span>{{ app.user.username }}</span>
+    {% endif %}
+
+    
+    <!-- <form class="form-inline my-2 my-lg-0"> -->
+    <!--   <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
+    <!--   <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
+    <!-- </form> -->
+  </div>
+</nav>
+{% block breadcrumb %}{% endblock %}
+<div style="padding-top:60px; height:100%">
+{% block body %}
+{% endblock %}
+</div>
+{% block javascripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+{% endblock %}
+</body>
+</html>

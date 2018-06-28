@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Controller;
+
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+class MyAptsController extends Controller
+{
+    /**
+     * @Route("/my/apts", name="my_apts")
+     */
+    public function index()
+    {
+        return $this->render('my_apts/index.html.twig', [
+            'controller_name' => 'MyAptsController',
+        ]);
+    }
+}

@@ -1,0 +1,68 @@
+
+{% extends 'base.html.twig' %}
+
+{% block javascripts %}
+{{ parent() }}
+
+<script>
+
+
+ $(document).ready(function(){
+     $('#shout_button').click(function(){
+	 
+	 $.post('/shout', {status : $('#shout').val()}, function(dd){
+	     location.reload();
+	 })
+     })
+     
+$('#like').click(function(){
+	 $.post('/like/{{user}}', function(dd){
+	     location.reload();
+	 })
+     })
+
+     $('#dislike').click(function(){
+	 $.post('/dislike/{{user}}', function(dd){
+	     location.reload();
+	 })
+     })
+
+ })
+ 
+</script>
+
+{% endblock %}
+
+
+{% block body %}
+  <div class="container">
+
+    <div class="card col-8 bg-q mx-auto" style="margin-bottom: 20px; margin-top:50px">
+      <div class="card-body">
+
+	
+	{% if is_granted('IS_AUTHENTICATED_FULLY') and app.user.username == username %}
+	    <span>{{ app.user.username }}</span>
+	    <div class="form-group">
+	    <input type="text" value="{{status}}" class="form-control" id="shout">
+	    <input type="submit" value="add"  class="btn" id="shout_button">
+	    </div>
+	{% else %}
+
+	{% if(status=='') %}
+	<p>{{ username }} said nothing yet</p>
+	{% else %}
+	<blockquote class="blockquote text-center">
+	  <p class="mb-0">{{ status }}</p>
+	  <footer class="blockquote-footer">{{ username }}</footer>
+	</blockquote>
+	{% endif %}
+
+	
+	
+{% endif %}
+
+      </div>
+    </div>
+  </div>
+{% endblock %}

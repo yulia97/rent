@@ -1,0 +1,29 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Registration{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <h1 class="mx-auto"
+        style="margin: 5px 0 20px 0; text-align: center;
+        font-weight: 100;">Регистрация</h1>
+
+    <div class="card col-6 bg-q mx-auto" style="margin-bottom: 20px;">
+      <div class="card-body">
+        {{ form_start(form) }}
+        <div class="form-group">
+          {{ form_label(form.username) }}
+          {{ form_widget(form.username) }}
+          {{ form_errors(form.username) }}
+        </div>
+        
+        <br>
+        {#<div class="form-group">#}
+        {#{{ form_row(form.submit) }}#}
+        {#</div>#}
+        {{ form_end(form) }}
+      </div>
+    </div>
+  </div>
+{% endblock %}

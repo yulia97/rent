@@ -1,0 +1,23 @@
+<?php
+
+namespace App\Controller;
+
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+class MyAptsController extends Controller
+{
+    /**
+     * @Route("/myads", name="my_apts")
+     */
+    public function index()
+    {
+
+	$user = $this->get('security.token_storage')->getToken()->getUser();
+	
+	
+        return $this->render('my_apts/index.html.twig', [
+            'controller_name' => 'MyAptsController',
+        ]);
+    }
+}

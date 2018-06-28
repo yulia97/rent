@@ -1,0 +1,83 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Update{% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+    <script>
+     $(document).ready(function(){
+	 
+	 
+	 $('#submitButton').click(function(){
+
+	     var formData = new FormData();
+	 var fileContainer = $('#files')[0].files
+	 
+	 for(var i = 0; i < fileContainer.length; i++){
+	     console.log(fileContainer[i])
+	     formData.append('file-'+i, fileContainer[i]);	 
+	 }
+
+	     $.ajax({
+		 url: '/file',
+		 data: formData,
+		 processData: false,
+		 contentType: false,
+		 type: 'POST',
+		 success: function (fdata) {
+		     console.log(fdata);
+		     
+		     $.post('/update/{{ uid }}', {
+			 title: $('#titleTextfield').val(),
+			 address: $('#addressTextfield').val(),
+			 description: $('#descriptionTextfield').val(),
+			 files: fdata
+		     }, function(res){
+			 window.location.replace("/my-ads");
+		     })
+		     
+	‚‚	 }})
+	 })
+	 
+	 
+    })
+</script>
+{% endblock %}
+
+
+
+{% block body %}
+  <div class="container">
+    <h1 class="mx-auto"
+        style="margin: 5px 0 20px 0; text-align: center;
+        font-weight: 100;">Up</h1>
+    <div class="card col-6 bg-q mx-auto" style="margin-bottom: 20px;">
+      <div class="card-body">
+        
+        
+        <br>
+        <div class="form-group">
+	  <label style="width:100%">Title
+	    <input type="text" class="form-control" id="titleTextfield" value="{{ title }}">
+	  </label>
+
+	  <label style="width:100%">Address
+	    <input type="text" class="form-control" id="addressTextfield" value="{{ address }}">
+	  </label>
+	  
+	  <label style="width:100%">Description
+	    <textarea class="form-control" id="descriptionTextfield">{{ description }}</textarea>
+	  </label>
+
+	  <label style="width:100%">Append Photo
+	      <input type="file" class="form-control" id="files" multiple>
+	  </label>
+
+
+	  <a href="#" class="btn btn-primary" id="submitButton">Submit</a>
+	</div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
